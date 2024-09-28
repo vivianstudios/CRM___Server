@@ -364,12 +364,21 @@ const setNextFollowUp = async (req, res) => {
 
 const setFollower = async (req, res) => {
   try {
-    const lead = await Leads.findOne({
-      id: req.params.id,
-    });
-    lead.followerID = req.body.id;
-    lead.followerName = req.body.name;
-    await lead.save();
+    const lead = await Leads.findOneAndUpdate(
+      {
+        id: req.params.id,
+      },
+      {
+        followerID: req.body.id,
+        followerName: req.body.name,
+      },
+      {
+        returnOriginal: false,
+      }
+    );
+    // lead.followerID = req.body.id;
+    // lead.followerName = req.body.name;
+    // await lead.save();
     res.status(200).json(lead);
   } catch (error) {
     res.status(500).send(error.message);
@@ -431,9 +440,15 @@ const checkValue = async (req, res) => {
       /^(http|https):\/\/([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.[a-z]{2,6}(\:[0-9]+)?(\/.*)?$/;
     if (urlPattern.test(value)) {
       const domain = new URL(value).hostname.replace(/^www\./, "");
-      filter.website = domain;
+
+      filter.website = { $regex: domain, $options: "i" };
     } else {
-      filter.website = value;
+      let domain = value.replace(/^www\./, "");
+      domain = domain.replace(/\/.*/, "");
+      domain = domain.replace(/\//g, "");
+
+      // console.log(domain);
+      filter.website = { $regex: domain, $options: "i" };
     }
   }
   if (path == "phone") {
@@ -445,6 +460,9 @@ const checkValue = async (req, res) => {
 
   try {
     const lead = await Leads.findOne(filter);
+    // const leads = await Leads.find();
+    // console.log(lead);
+    // console.log(leads);
     res.status(200).json(lead);
   } catch (error) {
     res.status(500).send(error.message);

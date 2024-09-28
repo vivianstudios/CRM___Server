@@ -60,7 +60,6 @@ const upload = multer({
 leads.use(searchRouter);
 leads.use(filterRouter);
 
-
 leads.post("/import", upload.single("file"), importLeads);
 leads.post("/", createNewLead);
 leads.get("/checkValue", checkValue);
@@ -81,33 +80,34 @@ leads.patch("/assignTo/:id", assignTo);
 leads.patch("/setStatus/:id", setStatus);
 leads.patch("/setPosibility/:id", setPosibility);
 leads.patch("/setNextFollowUp/:id", setNextFollowUp);
+
+leads.patch("/setFavOf/:id", setFavOf);
 leads.patch("/setFollower/:id", setFollower);
+leads.patch("/addRemarks/:id", addRemarks);
+leads.patch("/deleteRemark/:id", deleteRemark);
+leads.post("/import", upload.single("file"), importLeads);
+leads.post("/", createNewLead);
+leads.get("/checkValue", checkValue);
+leads.get("/", allLeads);
+leads.get("/allLeads", getAllLeads);
+leads.get("/freshLeads", getFreshLeads);
+leads.get("/trashLeads", getTrashLeads);
+leads.get("/followUp/:id", getFolloUpLeads);
+leads.get("/assignLeads/:id", getAssignToLeads);
+leads.get("/favLeads/:id", getFavLeads);
+leads.get("/:id", getOneLead);
+leads.get("/getOneLeadByLeadsNo/:id", getOneLeadByLeadsNo);
+leads.delete("/:id", deleteLead);
+leads.delete("/delete/allLeads", deleteAll);
+leads.patch("/addToTrash/:id", addToTrashLead);
+leads.patch("/assignTo/:id", assignTo);
+leads.patch("/setStatus/:id", setStatus);
+leads.patch("/setPosibility/:id", setPosibility);
+leads.patch("/setNextFollowUp/:id", setNextFollowUp);
+leads.post("/setFollower/:id", setFollower);
 leads.patch("/setFavOf/:id", setFavOf);
 leads.patch("/addRemarks/:id", addRemarks);
 leads.patch("/deleteRemark/:id", deleteRemark);
-leads.post('/import', upload.single('file'), importLeads);
-leads.post('/', createNewLead)
-leads.get('/checkValue', checkValue)
-leads.get('/', allLeads)
-leads.get('/allLeads', getAllLeads)
-leads.get('/freshLeads', getFreshLeads)
-leads.get('/trashLeads', getTrashLeads)
-leads.get('/followUp/:id', getFolloUpLeads)
-leads.get('/assignLeads/:id', getAssignToLeads)
-leads.get('/favLeads/:id', getFavLeads)
-leads.get('/:id', getOneLead)
-leads.get('/getOneLeadByLeadsNo/:id', getOneLeadByLeadsNo)
-leads.delete('/:id', deleteLead)
-leads.delete('/delete/allLeads', deleteAll)
-leads.patch('/addToTrash/:id', addToTrashLead)
-leads.patch('/assignTo/:id', assignTo)
-leads.patch('/setStatus/:id', setStatus)
-leads.patch('/setPosibility/:id', setPosibility)
-leads.patch('/setNextFollowUp/:id', setNextFollowUp)
-leads.patch('/setFollower/:id', setFollower)
-leads.patch('/setFavOf/:id', setFavOf)
-leads.patch('/addRemarks/:id', addRemarks)
-leads.patch('/deleteRemark/:id', deleteRemark)
-leads.patch('/:id', updateLead)
+leads.patch("/:id", updateLead);
 
 module.exports = leads;

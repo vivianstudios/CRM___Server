@@ -11,19 +11,19 @@ const socketIO = require("socket.io")(http, {
 });
 
 //Add this before the app.get() block
-socketIO.on("connection", (socket) => {
-  socket.on("message", async (data) => {
-    const lead = await Leads.findOne({
-      id: data.id,
-    });
-    lead.followerID = data.user_id;
-    lead.followerName = data.name;
-    await lead.save();
-    socket.emit("lead", lead);
-  });
-  socket.on("disconnect", () => {
-  });
-});
+// socketIO.on("connection", (socket) => {
+//   socket.on("message", async (data) => {
+//     const lead = await Leads.findOne({
+//       id: data.id,
+//     });
+//     lead.followerID = data.user_id;
+//     lead.followerName = data.name;
+//     await lead.save();
+//     socket.emit("lead", lead);
+//   });
+//   socket.on("disconnect", () => {
+//   });
+// });
 
 http.listen(PORT, () => {
   console.log(`server is running at port http://localhost:${PORT}`);
